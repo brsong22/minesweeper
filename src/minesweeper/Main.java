@@ -45,6 +45,8 @@ public class Main {
 		int gameOver = JOptionPane.showConfirmDialog(gameFrame, endGameText.toString() + "\nTime: " + endTime + " seconds.", "New Game?", JOptionPane.YES_NO_OPTION);
 		if(gameOver == JOptionPane.YES_OPTION){
 			changeIsFirstMoveStatus();
+			gameFrame.setVisible(false);
+			gameFrame.dispose();
 			startGame();
 		}
 		else{
