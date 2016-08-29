@@ -1,5 +1,7 @@
 package minesweeper;
 
+import java.awt.Color;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -17,7 +19,11 @@ public class MinesweeperStatsBar {
 		stats.setLayout(null);
 		gameStatusButton = new MinesweeperStatusButton();
 		this.bombsLabel = bLabel;
+		this.bombsLabel.setOpaque(true);
+		this.bombsLabel.setBackground(Color.WHITE);
 		this.timeLabel = tLabel;
+		this.timeLabel.setOpaque(true);
+		this.timeLabel.setBackground(Color.WHITE);
 		this.timeLabel.setText("0");
 		
 		switch(size){
