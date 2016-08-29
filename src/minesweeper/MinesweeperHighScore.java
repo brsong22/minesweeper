@@ -4,12 +4,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class MinesweeperHighScore {
 
 	private int highscore;
-	private String filePath = "/minesweeper/src/minesweeper/hiscore.txt";
+	private String filePath = "src/minesweeper/hiscore.txt";
 	
 	public MinesweeperHighScore(){
 		File f = new File(filePath);
@@ -18,7 +19,13 @@ public class MinesweeperHighScore {
 		    	String txtScore;
 				BufferedReader b = new BufferedReader(new FileReader(f));
 				try {
-					txtScore = b.readLine();
+					if((txtScore = b.readLine()) != null){
+						highscore = Integer.parseInt(txtScore);
+					}
+					else{
+						highscore = 0;
+					}
+					b.close();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -29,7 +36,31 @@ public class MinesweeperHighScore {
 			}
 		}
 		else{
-			
+			File newScore = new File(filePath);
+			try {
+				newScore.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			highscore = 0;
 		}
+	}
+	
+	public void saveHighScore(int score){
+		File f = new File(filePath);
+		try {
+			FileWriter scoreWriter = new FileWriter(f, false);
+			scoreWriter.write(score);
+			scoreWriter.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		highscore = score;
+	}
+	
+	public int getHighScore(){
+		return highscore;
 	}
 }
