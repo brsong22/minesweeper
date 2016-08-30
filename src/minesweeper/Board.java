@@ -7,11 +7,8 @@ public class Board{
 
 	private static JLabel timeCopy;
 	protected JFrame frame;
-	private JLabel bombsLabel;
-	private JLabel timeLabel;
 	private MinesweeperGrid minefield;
 	private MinesweeperStatsBar statsBar;
-	private MinesweeperTimer gameTime;
 	private GridSpace[][] gridSpaces;
 	private MinesweeperGridMouseListener gridListener;
 	private MinesweeperResetButtonMouseListener reset;
@@ -29,11 +26,6 @@ public class Board{
 	 */
 	public Board() {
 
-		bombsLabel = new JLabel();
-		timeLabel = new JLabel();
-		timeCopy = timeLabel;
-		MinesweeperTimerActionListener timerActionListener = new MinesweeperTimerActionListener(timeLabel);
-		gameTime = new MinesweeperTimer(1000, timerActionListener, timeLabel);
 		numRows = Main.NUM_ROWS_SMALL;
 		numCols = Main.NUM_ROWS_SMALL;
 		totalSpaces = numRows * numCols;
@@ -52,17 +44,20 @@ public class Board{
 		frame.setVisible(true);
 
 		final MinesweeperMenuBar menubar = new MinesweeperMenuBar();
+		//move these action listeners to be instantiated in the menubar class
 		MinesweeperMenuBarActionListener sizeSelected = new MinesweeperMenuBarActionListener(menubar, this, gameTime);
 		MinesweeperMenuBar.addActionListener(sizeSelected);
 		frame.setJMenuBar(menubar.getMenuBar());
 
-		statsBar = new MinesweeperStatsBar("small", bombsLabel, timeLabel);
+		statsBar = new MinesweeperStatsBar("small");
+		//move these action listeners to be instantiated in the statsbar class
 		reset = new MinesweeperResetButtonMouseListener(gameTime, this);
 		statsBar.getStatsButton().addMouseActionListener(reset);
 		frame.getContentPane().add(statsBar.getStatsBar());
 
 		minefield = new MinesweeperGrid("small");	//default starting size
 		gridSpaces = minefield.getButtonsArray();
+		//add these action listeners to be instantiated in the mouselistener class
 		gridListener = new MinesweeperGridMouseListener(gridSpaces, numSpacesLeft, totalBombs, statsBar);
 		minefield.addMouseListener(gridListener);
 		gridListener.addGameTimerListener(gameTime);
@@ -93,6 +88,8 @@ public class Board{
 
 		frame.getContentPane().removeAll();
 
+		
+		//move listeners to appropriate classes
 		statsBar = new MinesweeperStatsBar(size, bombsLabel, timeLabel);
 		reset = new MinesweeperResetButtonMouseListener(gameTime, this);
 		statsBar.getStatsButton().addMouseActionListener(reset);

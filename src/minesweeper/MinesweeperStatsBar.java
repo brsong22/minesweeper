@@ -9,16 +9,20 @@ public class MinesweeperStatsBar {
 	private MinesweeperStatusButton gameStatusButton;
 	private JLabel bombsLabel;
 	private JLabel timeLabel;
+	MinesweeperTimerActionListener timerActionListener;
+	MinesweeperTimer gameTime;
 	private int numberOfBombs;
 	
-	public MinesweeperStatsBar(String size, JLabel bLabel, JLabel tLabel){
+	public MinesweeperStatsBar(String size){
 		stats = new JPanel();
 		stats.setBounds(0, 0, 384, 35);
 		stats.setLayout(null);
 		gameStatusButton = new MinesweeperStatusButton();
-		this.bombsLabel = bLabel;
-		this.timeLabel = tLabel;
+		this.bombsLabel = new JLabel();
+		this.timeLabel = new JLabel();
 		this.timeLabel.setText("0");
+		timerActionListener = new MinesweeperTimerActionListener(timeLabel);
+		gameTime = new MinesweeperTimer(1000, timerActionListener, timeLabel);
 		
 		switch(size){
 			case "small":
