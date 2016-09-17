@@ -22,7 +22,7 @@ public class MinesweeperGridMouseListener implements MouseListener{
 
 	private ImageIcon flagIcon;
 	
-	public MinesweeperGridMouseListener(GridSpace[][] buttonsArray, int numSpaces, int numBombs, MinesweeperStatsBar statsBar){
+	public MinesweeperGridMouseListener(GridSpace[][] buttonsArray, int numSpaces, int numBombs){
 		try{
 			Image flagImage = ImageIO.read(getClass().getResource("flag.png"));
 	        flagImage = flagImage.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
@@ -33,8 +33,8 @@ public class MinesweeperGridMouseListener implements MouseListener{
 		buttons = buttonsArray.clone();
 		numSpacesLeft = numSpaces;
 		numBombsLeft = numBombs;
-		statusButton = statsBar.getStatsButton();
-		bombsLabel = statsBar.getBombLabel();
+		statusButton = Main.statsBar.getStatsButton();
+		bombsLabel = Main.statsBar.getBombLabel();
 	}
 	
 	@Override
@@ -69,7 +69,7 @@ public class MinesweeperGridMouseListener implements MouseListener{
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		if(Main.getIsFirstMoveStatus()){
-			gameTime.start();
+		//	gameTime.start();
 			Main.changeIsFirstMoveStatus();
 		}
 		int pressedID = Integer.parseInt(((JButton)e.getSource()).getName());
@@ -80,19 +80,19 @@ public class MinesweeperGridMouseListener implements MouseListener{
 			if(e.getButton() == MouseEvent.BUTTON1){
 				if(!played.getFlagStatus()){
 					if(played.containsBomb()){
-						gameTime.stop();
+					//	gameTime.stop();
 						statusButton.changeStatusIcon(3);
 						played.getJButton().setEnabled(false);
 						played.reveal();
 						played.getJButton().setBackground(Color.red);
-						Board.endGame(2);
+					//	Board.endGame(2);
 					}
 					else{
 						numSpacesLeft -= MinesweeperGrid.numberOfAdjacentBombs(buttons, buttonRow, buttonCol, 0);
 						if(numSpacesLeft == 0 && numBombsLeft == 0){
-							gameTime.stop();
+					//		gameTime.stop();
 							statusButton.changeStatusIcon(2);
-							Board.endGame(1);
+					//		Board.endGame(1);
 						}
 						statusButton.changeStatusIcon(0);
 					}
@@ -108,9 +108,9 @@ public class MinesweeperGridMouseListener implements MouseListener{
 					--numBombsLeft;
 					bombsLabel.setText("" + numBombsLeft);
 					if(numSpacesLeft == 0 && numBombsLeft == 0){
-						gameTime.stop();
+					//	gameTime.stop();
 						statusButton.changeStatusIcon(2);
-						Board.endGame(1);
+					//	Board.endGame(1);
 					}
 				}
 				else if(!played.isRevealed() && played.getFlagStatus()){

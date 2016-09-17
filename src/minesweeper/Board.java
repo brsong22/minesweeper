@@ -40,20 +40,20 @@ public class Board{
 	 */
 	private void initialize() {
 
-		frame = new JFrame();
-		frame.setVisible(true);
+//		frame = new JFrame();
+//		frame.setVisible(true);
 
-		final MinesweeperMenuBar menubar = new MinesweeperMenuBar();
-		//move these action listeners to be instantiated in the menubar class
-		MinesweeperMenuBarActionListener sizeSelected = new MinesweeperMenuBarActionListener(menubar, this, gameTime);
-		MinesweeperMenuBar.addActionListener(sizeSelected);
-		frame.setJMenuBar(menubar.getMenuBar());
+//		final MinesweeperMenuBar menubar = new MinesweeperMenuBar();
+//		//move these action listeners to be instantiated in the menubar class
+//		MinesweeperMenuBarActionListener sizeSelected = new MinesweeperMenuBarActionListener(menubar, this, gameTime);
+//		MinesweeperMenuBar.addActionListener(sizeSelected);
+//		frame.setJMenuBar(menubar.getMenuBar());
 
-		statsBar = new MinesweeperStatsBar("small");
-		//move these action listeners to be instantiated in the statsbar class
-		reset = new MinesweeperResetButtonMouseListener(gameTime, this);
-		statsBar.getStatsButton().addMouseActionListener(reset);
-		frame.getContentPane().add(statsBar.getStatsBar());
+//		statsBar = new MinesweeperStatsBar("small");
+//		//move these action listeners to be instantiated in the statsbar class
+//		reset = new MinesweeperResetButtonMouseListener(gameTime, this);
+//		statsBar.getStatsButton().addMouseActionListener(reset);
+//		frame.getContentPane().add(statsBar.getStatsBar());
 
 		minefield = new MinesweeperGrid("small");	//default starting size
 		gridSpaces = minefield.getButtonsArray();

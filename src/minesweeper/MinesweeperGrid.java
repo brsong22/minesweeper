@@ -34,6 +34,9 @@ public class MinesweeperGrid {
 	private int numBombsLeft;
 	private int totalBombs;
 	private GridSpace gridButtons[][];
+	
+	//mouse listener for the grid spaces
+	private MinesweeperGridMouseListener gridListener;
 
 	public MinesweeperGrid(String size){
 		switch(size){
@@ -76,6 +79,9 @@ public class MinesweeperGrid {
 			grid.setLayout(new GridLayout(numRows, numCols));
 			break;
 		}
+		
+		gridListener = new MinesweeperGridMouseListener(gridButtons, numSpacesLeft, totalBombs);
+		this.addMouseListener(gridListener);
 	}
 
 	private void addGridSpaces(){

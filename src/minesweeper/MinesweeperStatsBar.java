@@ -13,6 +13,8 @@ public class MinesweeperStatsBar {
 	MinesweeperTimer gameTime;
 	private int numberOfBombs;
 	
+	private MinesweeperResetButtonMouseListener resetButton;
+	
 	public MinesweeperStatsBar(String size){
 		stats = new JPanel();
 		stats.setBounds(0, 0, 384, 35);
@@ -66,6 +68,8 @@ public class MinesweeperStatsBar {
 				stats.add(timeLabel);
 				break;
 		}
+		
+		resetButton = new MinesweeperResetButtonMouseListener()
 	}
 
 	public JPanel getStatsBar(){
