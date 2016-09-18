@@ -22,17 +22,12 @@ public class MinesweeperStatsBar {
 		stats.setBounds(0, 0, 384, 35);
 		stats.setLayout(null);
 		gameStatusButton = new MinesweeperStatusButton();
-<<<<<<< HEAD
-		this.bombsLabel = new JLabel();
-		this.timeLabel = new JLabel();
-=======
 		this.bombsLabel = bLabel;
 		this.bombsLabel.setOpaque(true);
 		this.bombsLabel.setBackground(Color.WHITE);
 		this.timeLabel = tLabel;
 		this.timeLabel.setOpaque(true);
 		this.timeLabel.setBackground(Color.WHITE);
->>>>>>> master
 		this.timeLabel.setText("0");
 		timerActionListener = new MinesweeperTimerActionListener(timeLabel);
 		gameTime = new MinesweeperTimer(1000, timerActionListener, timeLabel);
