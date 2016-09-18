@@ -33,11 +33,9 @@ public class Main {
 		return isFirstMove;
 	}
 	
-	/**
-	 * instantiate the minesweeper ui
-	 */
+	
 	public static void startGame(){
-		
+		/*instantiate game ui*/
 		gameFrame = new JFrame();
 		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		gameFrame.getContentPane().setLayout(null);
