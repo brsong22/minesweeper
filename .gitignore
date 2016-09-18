@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 # bin files
 bin/*
+=======
+# bin directory
+/bin/*
+>>>>>>> master
 
 # Windows image file caches
 Thumbs.db
