@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-# bin files
-bin/*
-=======
 # bin directory
 /bin/*
 >>>>>>> master
