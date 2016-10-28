@@ -26,7 +26,20 @@ public class MinesweeperMenuBarActionListener implements ActionListener{
 			if(c.getName().equals(((JCheckBoxMenuItem)e.getSource()).getName())){
 				((AbstractButton)c).setSelected(true);
 				timer.stop();
-				board.resizeBoard(c.getName());
+				switch(c.getName()){
+					case "small":
+						board.resizeBoard(BoardSizeEnum.SMALL);
+						break;
+					case "medium":
+						board.resizeBoard(BoardSizeEnum.MEDIUM);
+						break;
+					case "large":
+						board.resizeBoard(BoardSizeEnum.LARGE);
+						break;
+					default:
+						board.resizeBoard(BoardSizeEnum.SMALL);
+						break;
+				}
 			}
 			else{
 				((AbstractButton)c).setSelected(false);

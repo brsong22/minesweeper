@@ -29,7 +29,8 @@ public class Main {
 	}
 	
 	public static void startGame(){
-		Board window = new Board();
+		BoardSizeEnum boardSize = BoardSizeEnum.SMALL;
+		Board window = new Board(boardSize);
 		gameFrame = window.getFrame();
 		window.drawBoard();
 	}
