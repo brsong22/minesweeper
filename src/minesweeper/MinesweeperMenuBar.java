@@ -14,26 +14,30 @@ public class MinesweeperMenuBar {
 	
 	private static ArrayList<JCheckBoxMenuItem> checkboxMenu = new ArrayList<JCheckBoxMenuItem>();
 	
-	public MinesweeperMenuBar(){
+	public MinesweeperMenuBar(String state){
+		
+		boolean smallState = state.equals("small");
+		boolean medState = state.equals("medium");
+		boolean largeState = state.equals("large");
 		
 		this.menuBar = new JMenuBar();
 		this.gameSizes = new JMenu("Size");
 		this.menuBar.add(this.gameSizes);
 		
 		JCheckBoxMenuItem small = new JCheckBoxMenuItem("9x9: 10 Mines");
-		small.setState(true);
+		small.setState(smallState);
 		small.setName("small");
 		gameSizes.add(small);
 		checkboxMenu.add(small);
 		
 		JCheckBoxMenuItem medium = new JCheckBoxMenuItem("16x16: 40 Mines");
-		medium.setState(false);
+		medium.setState(medState);
 		medium.setName("medium");
 		gameSizes.add(medium);
 		checkboxMenu.add(medium);
 		
 		JCheckBoxMenuItem large = new JCheckBoxMenuItem("30x16: 99 Mines");
-		large.setState(false);
+		large.setState(largeState);
 		large.setName("large");
 		gameSizes.add(large);
 		checkboxMenu.add(large);

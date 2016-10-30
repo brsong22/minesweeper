@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 public class Board{
 
 	private static JLabel timeCopy;
+	private static Board boardCopy;
 	protected JFrame frame;
 	
 	/*Board Components*/
@@ -15,13 +16,13 @@ public class Board{
 	private JLabel bombsLabel;
 	private JLabel timeLabel;
 	private MinesweeperResetButtonMouseListener reset;
-	private MinesweeperGrid minefield;
+	private static MinesweeperGrid minefield;
 	private GridSpace[][] gridSpaces;
 	private MinesweeperGridMouseListener gridListener;
 	
 	/*Board Properties*/
-	private BoardSizeEnum boardSize;
-	private BoardSizeEnum lastSize;
+	private BoardSizeEnum boardSize = BoardSizeEnum.SMALL; //default board size
+//	private BoardSizeEnum lastSize;
 	private int numRows;
 	private int numCols;
 	private int totalSpaces;
@@ -34,52 +35,70 @@ public class Board{
 	 */
 	public Board(BoardSizeEnum s) {
 
+		/*board properties*/
 		this.boardSize = s;
 		bombsLabel = new JLabel();
 		timeLabel = new JLabel();
 		timeCopy = timeLabel;
-		MinesweeperTimerActionListener timerActionListener = new MinesweeperTimerActionListener(timeLabel);
-		gameTime = new MinesweeperTimer(1000, timerActionListener, timeLabel);
+		
 		numRows = boardSize.getRows();
 		numCols = boardSize.getCols();
 		totalSpaces = numRows * numCols;
 		numSpacesLeft = totalSpaces;
 		totalBombs = boardSize.getBombs();
-
-		initialize();
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-
-		frame = new JFrame();
-		frame.setVisible(true);
-
-		this.menuBar = new MinesweeperMenuBar();
-		MinesweeperMenuBarActionListener sizeSelected = new MinesweeperMenuBarActionListener(menuBar, this, gameTime);
+		
+		MinesweeperTimerActionListener timerActionListener = new MinesweeperTimerActionListener(timeLabel);
+		gameTime = new MinesweeperTimer(1000, timerActionListener, timeLabel);
+		menuBar = new MinesweeperMenuBar(s.getName());
+		MinesweeperMenuBarActionListener sizeSelected = new MinesweeperMenuBarActionListener(this, gameTime);
 		MinesweeperMenuBar.addActionListener(sizeSelected);
-		frame.setJMenuBar(menuBar.getMenuBar());
-
-		statsBar = new MinesweeperStatsBar("small", bombsLabel, timeLabel);
+		
+		statsBar = new MinesweeperStatsBar(s, bombsLabel, timeLabel);
 		reset = new MinesweeperResetButtonMouseListener(gameTime, this);
 		statsBar.getStatsButton().addMouseActionListener(reset);
-		frame.getContentPane().add(statsBar.getStatsBar());
-
-		minefield = new MinesweeperGrid("small");	//default starting size
+		
+		minefield = new MinesweeperGrid(s.getName());
 		gridSpaces = minefield.getButtonsArray();
 		gridListener = new MinesweeperGridMouseListener(gridSpaces, numSpacesLeft, totalBombs, statsBar);
 		minefield.addMouseListener(gridListener);
 		gridListener.addGameTimerListener(gameTime);
-		frame.getContentPane().add(minefield.getMinesweeperGrid());
+		
+		
+		frame = new JFrame();
+		frame.setVisible(true);
+		frame.setJMenuBar(menuBar.getMenuBar());
 
-		frame.setBounds(0, 0, 400, 425);
-		frame.setSize(400, 425);
+		frame.getContentPane().add(statsBar.getStatsBar());
+
+		frame.getContentPane().add(minefield.getMinesweeperGrid());		
+		
+		switch(boardSize){
+			case SMALL:
+				this.boardSize = BoardSizeEnum.SMALL;
+				frame.setBounds(0, 0, 400, 425);
+				frame.setSize(400, 425);
+				break;
+			case MEDIUM:
+				this.boardSize = BoardSizeEnum.MEDIUM;
+				frame.setBounds(0, 0, 707, 735);
+				frame.setSize(707, 735);
+				break;
+			case LARGE:
+				this.boardSize = BoardSizeEnum.LARGE;
+				frame.setBounds(0, 0, 1315, 735);
+				frame.setSize(1315, 735);
+				break;
+			default:
+				this.boardSize = BoardSizeEnum.SMALL;
+				frame.setBounds(0, 0, 400, 425);
+				frame.setSize(400, 425);
+				break;
+		}
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-
-		lastSize = BoardSizeEnum.SMALL;
+		boardCopy = this;
+		System.out.println("new size" + boardSize.getName());
+		drawBoard();
 	}
 
 	public void drawBoard(){
@@ -91,51 +110,19 @@ public class Board{
 		return frame;
 	}
 
-	public void resetBoard(){
-		resizeBoard(lastSize);
+	public void resetBoard(BoardSizeEnum size){
+		frame.dispose();
+		new Board(size);
 	}
 
 	public void resizeBoard(BoardSizeEnum size){
-		frame.getContentPane().removeAll();
-
-		statsBar = new MinesweeperStatsBar(size.getName(), bombsLabel, timeLabel);
-		reset = new MinesweeperResetButtonMouseListener(gameTime, this);
-		statsBar.getStatsButton().addMouseActionListener(reset);
-		
-		System.out.println(size.getName());
+		frame.getContentPane().remove(minefield.getMinesweeperGrid());
+		frame.getContentPane().remove(statsBar.getStatsBar());
 		minefield = new MinesweeperGrid(size.getName());
-		gridSpaces = minefield.getButtonsArray();
-		gridListener = new MinesweeperGridMouseListener(gridSpaces, totalSpaces, totalBombs, statsBar);
-		minefield.addMouseListener(gridListener);
-		gridListener.addGameTimerListener(gameTime);
-
-		frame.getContentPane().add(minefield.getMinesweeperGrid());
-		frame.getContentPane().add(statsBar.getStatsBar());
+		statsBar = new MinesweeperStatsBar(size, bombsLabel, timeLabel);
+		drawBoard();
 		Main.changeIsFirstMoveStatus();
-		switch(size){
-			case SMALL:
-				this.boardSize = BoardSizeEnum.SMALL;
-				frame.setBounds(0, 0, 400, 425);
-				frame.setSize(400, 425);
-				drawBoard();
-				break;
-			case MEDIUM:
-				this.boardSize = BoardSizeEnum.MEDIUM;
-				frame.setBounds(0, 0, 707, 735);
-				frame.setSize(707, 735);
-				drawBoard();
-				break;
-			case LARGE:
-				this.boardSize = BoardSizeEnum.LARGE;
-				frame.setBounds(0, 0, 1315, 735);
-				frame.setSize(1315, 735);
-				drawBoard();
-				break;
-			default:
-				drawBoard();	
-				break;
-		}
-		lastSize = size;
+//		lastSize = size;
 	}
 	
 	public static void endGame(int endStatus){
@@ -144,10 +131,18 @@ public class Board{
 	}
 	
 	public MinesweeperGrid getGridSpace(){
-		return this.minefield;
+		return minefield;
 	}
 	
 	public MinesweeperMenuBar getMenuBar(){
-		return this.menuBar;
+		return menuBar;
+	}
+	
+	public BoardSizeEnum getBoardSize(){
+		return boardSize;
+	}
+	
+	public static Board getBoard(){
+		return boardCopy;
 	}
 }

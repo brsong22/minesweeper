@@ -7,16 +7,17 @@ import javax.swing.JOptionPane;
 
 public class Main {
 	
-	public final static int NUM_ROWS_SMALL = 9;
-	public final static int NUM_COLS_SMALL = 9;
-	public final static int NUM_ROWS_MED = 16;
-	public final static int NUM_COLS_MED = 16;
-	public final static int NUM_ROWS_LARGE = 16;
-	public final static int NUM_COLS_LARGE = 30;
-	public final static int NUM_BOMBS_SMALL = 10;
-	public final static int NUM_BOMBS_MED = 40;
-	public final static int NUM_BOMBS_LARGE = 99;
+//	public final static int NUM_ROWS_SMALL = 9;
+//	public final static int NUM_COLS_SMALL = 9;
+//	public final static int NUM_ROWS_MED = 16;
+//	public final static int NUM_COLS_MED = 16;
+//	public final static int NUM_ROWS_LARGE = 16;
+//	public final static int NUM_COLS_LARGE = 30;
+//	public final static int NUM_BOMBS_SMALL = 10;
+//	public final static int NUM_BOMBS_MED = 40;
+//	public final static int NUM_BOMBS_LARGE = 99;
 	
+	private static Board board;
 	private static boolean isFirstMove = true;
 	private static JFrame gameFrame;
 	
@@ -29,10 +30,15 @@ public class Main {
 	}
 	
 	public static void startGame(){
-		BoardSizeEnum boardSize = BoardSizeEnum.SMALL;
-		Board window = new Board(boardSize);
-		gameFrame = window.getFrame();
-		window.drawBoard();
+		BoardSizeEnum boardSize = BoardSizeEnum.SMALL; //default starting size
+		board = new Board(boardSize);
+		gameFrame = board.getFrame();
+	}
+	
+	public static void startGame(BoardSizeEnum size){
+		System.out.println(size.getName());
+		board = new Board(size);
+		gameFrame = board.getFrame();
 	}
 	
 	public static void gameOver(int winLoss, String endTime){
@@ -47,7 +53,8 @@ public class Main {
 		if(gameOver == JOptionPane.YES_OPTION){
 			gameFrame.dispose();
 			changeIsFirstMoveStatus();
-			startGame();
+			System.out.println(board.getBoardSize().getName());
+			startGame(Board.getBoard().getBoardSize());
 		}
 		else{
 			gameFrame.dispose();

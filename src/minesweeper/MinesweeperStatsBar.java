@@ -13,11 +13,12 @@ public class MinesweeperStatsBar {
 	private JLabel timeLabel;
 	private int numberOfBombs;
 	
-	public MinesweeperStatsBar(String size, JLabel bLabel, JLabel tLabel){
+	public MinesweeperStatsBar(BoardSizeEnum size, JLabel bLabel, JLabel tLabel){
 		stats = new JPanel();
-		stats.setBounds(0, 0, 384, 35);
 		stats.setLayout(null);
 		gameStatusButton = new MinesweeperStatusButton();
+		
+		//set label properties
 		this.bombsLabel = bLabel;
 		this.bombsLabel.setOpaque(true);
 		this.bombsLabel.setBackground(Color.WHITE);
@@ -27,9 +28,9 @@ public class MinesweeperStatsBar {
 		this.timeLabel.setText("0");
 		
 		switch(size){
-			case "small":
-				bombsLabel.setText("" + Main.NUM_BOMBS_SMALL);
-				numberOfBombs = Main.NUM_BOMBS_SMALL;
+			case SMALL:
+				bombsLabel.setText("" + size.getBombs());
+				numberOfBombs = size.getBombs();
 				stats.setBounds(0, 0, 384, 35);
 				gameStatusButton.getStatusButton().setBounds(171, 0, 35, 35);
 				bombsLabel.setBounds(48, 0, 66, 26);
@@ -39,9 +40,9 @@ public class MinesweeperStatsBar {
 				stats.add(timeLabel);
 				
 				break;
-			case "medium":
-				bombsLabel.setText("" + Main.NUM_BOMBS_MED);
-				numberOfBombs = Main.NUM_BOMBS_MED;
+			case MEDIUM:
+				bombsLabel.setText("" + size.getBombs());
+				numberOfBombs = size.getBombs();
 				stats.setBounds(0, 0, 690, 35);
 				gameStatusButton.getStatusButton().setBounds(328, 0, 35, 35);
 				bombsLabel.setBounds(84, 0, 66, 26);
@@ -50,9 +51,9 @@ public class MinesweeperStatsBar {
 				stats.add(bombsLabel);
 				stats.add(timeLabel);
 				break;
-			case "large":
-				bombsLabel.setText("" + Main.NUM_BOMBS_LARGE);
-				numberOfBombs = Main.NUM_BOMBS_LARGE;
+			case LARGE:
+				bombsLabel.setText("" + size.getBombs());
+				numberOfBombs = size.getBombs();
 				gameStatusButton.getStatusButton().setBounds(633, 0, 35, 35);
 				bombsLabel.setBounds(150, 0, 66, 26);
 				timeLabel.setBounds(987, 0, 66, 26);
