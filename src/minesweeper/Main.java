@@ -36,7 +36,6 @@ public class Main {
 	}
 	
 	public static void startGame(BoardSizeEnum size){
-		System.out.println(size.getName());
 		board = new Board(size);
 		gameFrame = board.getFrame();
 	}
@@ -53,7 +52,6 @@ public class Main {
 		if(gameOver == JOptionPane.YES_OPTION){
 			gameFrame.dispose();
 			changeIsFirstMoveStatus();
-			System.out.println(board.getBoardSize().getName());
 			startGame(Board.getBoard().getBoardSize());
 		}
 		else{

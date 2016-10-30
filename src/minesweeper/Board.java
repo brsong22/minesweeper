@@ -97,7 +97,6 @@ public class Board{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		boardCopy = this;
-		System.out.println("new size" + boardSize.getName());
 		drawBoard();
 	}
 
