@@ -7,16 +7,17 @@ import javax.swing.JOptionPane;
 
 public class Main {
 	
-	public final static int NUM_ROWS_SMALL = 9;
-	public final static int NUM_COLS_SMALL = 9;
-	public final static int NUM_ROWS_MED = 16;
-	public final static int NUM_COLS_MED = 16;
-	public final static int NUM_ROWS_LARGE = 16;
-	public final static int NUM_COLS_LARGE = 30;
-	public final static int NUM_BOMBS_SMALL = 10;
-	public final static int NUM_BOMBS_MED = 40;
-	public final static int NUM_BOMBS_LARGE = 99;
+//	public final static int NUM_ROWS_SMALL = 9;
+//	public final static int NUM_COLS_SMALL = 9;
+//	public final static int NUM_ROWS_MED = 16;
+//	public final static int NUM_COLS_MED = 16;
+//	public final static int NUM_ROWS_LARGE = 16;
+//	public final static int NUM_COLS_LARGE = 30;
+//	public final static int NUM_BOMBS_SMALL = 10;
+//	public final static int NUM_BOMBS_MED = 40;
+//	public final static int NUM_BOMBS_LARGE = 99;
 	
+	private static Board board;
 	private static boolean isFirstMove = true;
 	private static JFrame gameFrame;
 	
@@ -28,10 +29,30 @@ public class Main {
 		return isFirstMove;
 	}
 	
+	public static void setBoard(Board b){
+		board = b;
+	}
+	public static Board getBoard(){
+		return board;
+	}
+	
+	public static void setGameFrame(JFrame f){
+		gameFrame = f;
+	}
+	
+	public static JFrame getGameFrame(){
+		return gameFrame;
+	}
+	
 	public static void startGame(){
-		Board window = new Board();
-		gameFrame = window.getFrame();
-		window.drawBoard();
+		BoardSizeEnum boardSize = BoardSizeEnum.SMALL; //default starting size
+		board = new Board(boardSize);
+		gameFrame = board.getFrame();
+	}
+	
+	public static void startGame(BoardSizeEnum size){
+		board = new Board(size);
+		gameFrame = board.getFrame();
 	}
 	
 	public static void gameOver(int winLoss, String endTime){
@@ -44,8 +65,9 @@ public class Main {
 		}
 		int gameOver = JOptionPane.showConfirmDialog(gameFrame, endGameText.toString() + "\nTime: " + endTime + " seconds.\nPlay again?", "New Game?", JOptionPane.YES_NO_OPTION);
 		if(gameOver == JOptionPane.YES_OPTION){
+			gameFrame.dispose();
 			changeIsFirstMoveStatus();
-			startGame();
+			startGame(Board.getBoard().getBoardSize());
 		}
 		else{
 			gameFrame.dispose();

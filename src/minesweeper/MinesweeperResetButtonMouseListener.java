@@ -16,7 +16,7 @@ public class MinesweeperResetButtonMouseListener implements MouseListener{
 	public void mouseClicked(MouseEvent e) {
 		gameTime.stop();
 		gameTime.resetTimer();
-		board.resetBoard();
+		board.resetBoard(board.getBoardSize());
 	}
 
 	@Override
