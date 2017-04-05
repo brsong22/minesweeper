@@ -70,7 +70,8 @@ public class Board{
 
 		frame.getContentPane().add(statsBar.getStatsBar());
 
-		frame.getContentPane().add(minefield.getMinesweeperGrid());		
+		frame.getContentPane().add(minefield.getMinesweeperGrid());
+		Main.setGameFrame(frame);
 		
 		switch(boardSize){
 			case SMALL:
@@ -114,15 +115,15 @@ public class Board{
 		new Board(size);
 	}
 
-	public void resizeBoard(BoardSizeEnum size){
-		frame.getContentPane().remove(minefield.getMinesweeperGrid());
-		frame.getContentPane().remove(statsBar.getStatsBar());
-		minefield = new MinesweeperGrid(size.getName());
-		statsBar = new MinesweeperStatsBar(size, bombsLabel, timeLabel);
-		drawBoard();
-		Main.changeIsFirstMoveStatus();
-//		lastSize = size;
-	}
+//	public void resizeBoard(BoardSizeEnum size){
+//		frame.getContentPane().remove(minefield.getMinesweeperGrid());
+//		frame.getContentPane().remove(statsBar.getStatsBar());
+//		minefield = new MinesweeperGrid(size.getName());
+//		statsBar = new MinesweeperStatsBar(size, bombsLabel, timeLabel);
+//		drawBoard();
+//		Main.changeIsFirstMoveStatus();
+////		lastSize = size;
+//	}
 	
 	public static void endGame(int endStatus){
 		String endTime = timeCopy.getText();

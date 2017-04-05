@@ -29,6 +29,21 @@ public class Main {
 		return isFirstMove;
 	}
 	
+	public static void setBoard(Board b){
+		board = b;
+	}
+	public static Board getBoard(){
+		return board;
+	}
+	
+	public static void setGameFrame(JFrame f){
+		gameFrame = f;
+	}
+	
+	public static JFrame getGameFrame(){
+		return gameFrame;
+	}
+	
 	public static void startGame(){
 		BoardSizeEnum boardSize = BoardSizeEnum.SMALL; //default starting size
 		board = new Board(boardSize);
