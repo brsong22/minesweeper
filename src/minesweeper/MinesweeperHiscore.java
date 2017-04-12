@@ -10,7 +10,7 @@ public class MinesweeperHiscore {
 	private String score;
 	
 	public MinesweeperHiscore(){
-		score = "0";
+		score = "-1";
 		/*check if hiscore file exists*/
 		
 		File scoreFile = new File("src/minesweeper/hiscore.txt");
@@ -21,7 +21,11 @@ public class MinesweeperHiscore {
 				BufferedReader hiscoreReader = new BufferedReader(new FileReader(scoreFile));
 				String recentScore = score;
 				while((recentScore = hiscoreReader.readLine()) != null){
-					score = recentScore;
+					if(scoreIsNumber(recentScore)){
+						if(Integer.valueOf(recentScore) < Integer.valueOf(score) || score.equals("-1")){
+							score = recentScore;
+						}
+					}
 				}
 				hiscoreReader.close();
 			}
@@ -33,6 +37,10 @@ public class MinesweeperHiscore {
 			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
+	}
+	
+	public boolean scoreIsNumber(String s){
+		return s.matches("\\d*");
 	}
 	
 	public String getScore(){
