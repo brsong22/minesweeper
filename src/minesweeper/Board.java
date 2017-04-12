@@ -15,6 +15,7 @@ public class Board{
 	private MinesweeperTimer gameTime;
 	private JLabel bombsLabel;
 	private JLabel timeLabel;
+	private JLabel hiscoreLabel;
 	private MinesweeperResetButtonMouseListener reset;
 	private static MinesweeperGrid minefield;
 	private GridSpace[][] gridSpaces;
@@ -36,10 +37,15 @@ public class Board{
 	public Board(BoardSizeEnum s) {
 
 		/*board properties*/
+		/*because of cyclical dependencies I create a new instance of 
+		 * each components' class and initialize the Board component variables
+		 * so we can have a reference for setting values to these components
+		 * as the game is played.*/
 		this.boardSize = s;
 		bombsLabel = new JLabel();
 		timeLabel = new JLabel();
 		timeCopy = timeLabel;
+		hiscoreLabel = new JLabel();
 		
 		numRows = boardSize.getRows();
 		numCols = boardSize.getCols();
@@ -53,7 +59,7 @@ public class Board{
 		MinesweeperMenuBarActionListener sizeSelected = new MinesweeperMenuBarActionListener(this, gameTime);
 		MinesweeperMenuBar.addActionListener(sizeSelected);
 		
-		statsBar = new MinesweeperStatsBar(s, bombsLabel, timeLabel);
+		statsBar = new MinesweeperStatsBar(s, bombsLabel, timeLabel, hiscoreLabel);
 		reset = new MinesweeperResetButtonMouseListener(gameTime, this);
 		statsBar.getStatsButton().addMouseActionListener(reset);
 		
