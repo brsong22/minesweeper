@@ -11,10 +11,25 @@ public class MinesweeperHiscore {
 
 	private String score;
 	private File scoreFile;
+	private BoardSizeEnum boardSize;
 	
-	public MinesweeperHiscore(){
-		score = "-1";
-		scoreFile = new File("src/minesweeper/hiscore.txt");
+	public MinesweeperHiscore(BoardSizeEnum size){
+		boardSize = size;
+		score = "1";
+		switch(boardSize){
+			case SMALL:
+				scoreFile = new File("src/minesweeper/hiscore1.txt");
+				break;
+			case MEDIUM:
+				scoreFile = new File("src/minesweeper/hiscore2.txt");
+				break;
+			case LARGE:
+				scoreFile = new File("src/minesweeper/hiscore3.txt");
+				break;
+			default:
+				scoreFile = new File("src/minesweeper/hiscore1.txt");
+				break;
+		}
 		/*check if hiscore file exists*/
 	}
 	
@@ -34,10 +49,18 @@ public class MinesweeperHiscore {
 				//the file exists. read in existing high score
 				BufferedReader hiscoreReader = new BufferedReader(new FileReader(scoreFile));
 				String recentScore = score;
-				while((recentScore = hiscoreReader.readLine()) != null){
-					if(scoreIsNumber(recentScore)){
-						if(Integer.valueOf(recentScore) < Integer.valueOf(score) || score.equals("-1")){
-							score = recentScore;
+				if((recentScore = hiscoreReader.readLine()) == null){
+					//hiscore exists but file is empty
+					score = "0";
+				}
+				else{
+					//if hiscore.txt is not empty, set score since we ingested first line of file already.
+					score = recentScore;
+					while((recentScore = hiscoreReader.readLine()) != null){
+						if(scoreIsNumber(recentScore)){
+							if(Integer.valueOf(recentScore) < Integer.valueOf(score) || score.equals("-1")){
+								score = recentScore;
+							}
 						}
 					}
 				}
@@ -57,8 +80,8 @@ public class MinesweeperHiscore {
 	public void saveHiscore(String score){
 		try {
 			BufferedWriter hiscoreWriter = new BufferedWriter(new FileWriter(scoreFile, true));
-			hiscoreWriter.newLine();
 			hiscoreWriter.write(score);
+			hiscoreWriter.newLine();
 			hiscoreWriter.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
