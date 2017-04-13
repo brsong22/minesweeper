@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 /**
  * 
@@ -19,22 +20,29 @@ public class MinesweeperHiscore {
 	private String score; 				//the score values read in from hiscore1/2/3.txt
 	private File scoreFile; 			//the hiscore file we will read from.
 	private BoardSizeEnum boardSize; 	//the board size to determine which file we will read/write.
+	private String jarPath;
 	
 	public MinesweeperHiscore(BoardSizeEnum size){
+		try {
+			jarPath = MinesweeperHiscore.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		boardSize = size;	//set the board size so we know which file to read/write.
 		score = "-1";		//default the score to -1 since lower scores are better but we need to do a < comparison and scores must be > 0.
 		switch(boardSize){
 			case SMALL:
-				scoreFile = new File("src/minesweeper/hiscore1.txt");
+				scoreFile = new File(jarPath+"hiscore1.txt");
 				break;
 			case MEDIUM:
-				scoreFile = new File("src/minesweeper/hiscore2.txt");
+				scoreFile = new File(jarPath+"hiscore2.txt");
 				break;
 			case LARGE:
-				scoreFile = new File("src/minesweeper/hiscore3.txt");
+				scoreFile = new File(jarPath+"hiscore3.txt");
 				break;
 			default:
-				scoreFile = new File("src/minesweeper/hiscore1.txt");
+				scoreFile = new File(jarPath+"hiscore1.txt");
 				break;
 		}
 	}

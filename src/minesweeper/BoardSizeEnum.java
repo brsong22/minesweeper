@@ -5,6 +5,8 @@ package minesweeper;
  * @author Richard Song
  * Enum: BoardSizeEnum
  * *This enum defines the sizes of the game
+ * 
+ * TO DO: add custom size and bomb count
  *
  */
 public enum BoardSizeEnum {
