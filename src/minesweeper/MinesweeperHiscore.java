@@ -7,15 +7,22 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * 
+ * @author Richard Song
+ * Class: MinesweeperHiscore
+ * *This class handles reading and writing high scores.
+ *
+ */
 public class MinesweeperHiscore {
 
-	private String score;
-	private File scoreFile;
-	private BoardSizeEnum boardSize;
+	private String score; 				//the score values read in from hiscore1/2/3.txt
+	private File scoreFile; 			//the hiscore file we will read from.
+	private BoardSizeEnum boardSize; 	//the board size to determine which file we will read/write.
 	
 	public MinesweeperHiscore(BoardSizeEnum size){
-		boardSize = size;
-		score = "1";
+		boardSize = size;	//set the board size so we know which file to read/write.
+		score = "-1";		//default the score to -1 since lower scores are better but we need to do a < comparison and scores must be > 0.
 		switch(boardSize){
 			case SMALL:
 				scoreFile = new File("src/minesweeper/hiscore1.txt");
@@ -30,22 +37,26 @@ public class MinesweeperHiscore {
 				scoreFile = new File("src/minesweeper/hiscore1.txt");
 				break;
 		}
-		/*check if hiscore file exists*/
 	}
 	
+	/**
+	 * scoreIsNumber
+	 * regex to check if the input string represents an integer.
+	 * 
+	 * @param s - string we are validating
+	 * @return - boolean if string represents integer or not
+	 */
 	public boolean scoreIsNumber(String s){
 		return s.matches("\\d*");
 	}
 	
 	/**
-	 * setHiscore
-	 * set the score variable of the MinesweeperHiscore object
-	 * read from hiscore.txt and find the fastest time recorded
+	 * readHiscore
+	 * read the times (scores) from scoreFile
 	 */
-	public void setHiscore(){
+	public void readHiscore(){
 		try {
 			if(!scoreFile.createNewFile()){
-				
 				//the file exists. read in existing high score
 				BufferedReader hiscoreReader = new BufferedReader(new FileReader(scoreFile));
 				String recentScore = score;
@@ -77,6 +88,12 @@ public class MinesweeperHiscore {
 		}
 	}
 	
+	/**
+	 * saveHiscore
+	 * append the time (score) of a won game to scoreFile
+	 * 
+	 * @param score - the time it took to win
+	 */
 	public void saveHiscore(String score){
 		try {
 			BufferedWriter hiscoreWriter = new BufferedWriter(new FileWriter(scoreFile, true));
@@ -89,9 +106,15 @@ public class MinesweeperHiscore {
 		}
 	}
 	
+	/**
+	 * getScore
+	 * return score property of MinesweeperHiscore object
+	 * 
+	 * @return - score property
+	 */
 	public String getScore(){
-		System.out.println("score: "+score);
 		try {
+			//make sure we have set score to represent a valid integer.
 		    Integer.parseInt(score);
 		}
 		catch (NumberFormatException e) {

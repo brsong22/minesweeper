@@ -3,6 +3,13 @@ package minesweeper;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+/**
+ * 
+ * @author Richard Song
+ * Class: Board
+ * *This class contains the game components of minesweeper
+ *
+ */
 public class Board{
 
 	private static JLabel timeCopy;
@@ -32,7 +39,9 @@ public class Board{
 
 
 	/**
-	 * Create the application.
+	 * Board constructor
+	 * 
+	 * @param s - size of the board we are creating
 	 */
 	public Board(BoardSizeEnum s) {
 
@@ -107,47 +116,88 @@ public class Board{
 		drawBoard();
 	}
 
+	/**
+	 * drawBoard
+	 * draw the GUI frame and components so we can see the game
+	 */
 	public void drawBoard(){
 		frame.validate();
 		frame.repaint();
 	}
 
+	/**
+	 * getFrame
+	 * return the GUI frame so we can manipulate it through menu options
+	 * i.e. starting new game or resizing the game board
+	 * 
+	 * @return - GUI frame
+	 */
 	public JFrame getFrame(){
 		return frame;
 	}
 
+	/**
+	 * resetBoard
+	 * creates a new board to simulate starting a new game
+	 * called whenever a game is won/lost or when the board is resized
+	 * 
+	 * @param size - the size of the new game
+	 */
 	public void resetBoard(BoardSizeEnum size){
 		frame.dispose();
 		new Board(size);
 	}
-
-//	public void resizeBoard(BoardSizeEnum size){
-//		frame.getContentPane().remove(minefield.getMinesweeperGrid());
-//		frame.getContentPane().remove(statsBar.getStatsBar());
-//		minefield = new MinesweeperGrid(size.getName());
-//		statsBar = new MinesweeperStatsBar(size, bombsLabel, timeLabel);
-//		drawBoard();
-//		Main.changeIsFirstMoveStatus();
-////		lastSize = size;
-//	}
 	
+	/**
+	 * endGame
+	 * gather the necessary game information when the game is over
+	 * 
+	 * @param endStatus - status of whether game was won or lost
+	 */
 	public static void endGame(int endStatus){
+		//getting the gameplay time so we can display it in the game over window
 		String endTime = timeCopy.getText();
 		Main.gameOver(endStatus, endTime);
 	}
 	
+	/**
+	 * getGridSpace
+	 * gets the grid space of the GUI
+	 * 
+	 * @return - minefield grid
+	 */
 	public MinesweeperGrid getGridSpace(){
 		return minefield;
 	}
 	
+	/**
+	 * getMenuBar
+	 * gets the menu bar of the GUI
+	 * 
+	 * @return - game menu bar
+	 */
 	public MinesweeperMenuBar getMenuBar(){
 		return menuBar;
 	}
 	
+	/**
+	 * getBoardSize
+	 * returns the size of the current game
+	 * 
+	 * @return - size of the game
+	 */
 	public BoardSizeEnum getBoardSize(){
 		return boardSize;
 	}
 	
+	/**
+	 * getBoard
+	 * returns a copy of the current board
+	 * this is called from Main when the game is over so that we can accurately obtain
+	 * 	the previous game size when restarting a game
+	 * 
+	 * @return - copy of the board that was just played
+	 */
 	public static Board getBoard(){
 		return boardCopy;
 	}

@@ -6,6 +6,13 @@ import java.util.Random;
 
 import javax.swing.JPanel;
 
+/**
+ * 
+ * @author Richard Song
+ * Class: MinesweeperGrid
+ * *This class represents the overall collection of GridSpaces
+ *
+ */
 public class MinesweeperGrid {
 
 	//JPanel to hold the GridSpaces for the game
