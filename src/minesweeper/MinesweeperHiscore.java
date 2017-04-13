@@ -1,19 +1,33 @@
 package minesweeper;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class MinesweeperHiscore {
 
 	private String score;
+	private File scoreFile;
 	
 	public MinesweeperHiscore(){
 		score = "-1";
+		scoreFile = new File("src/minesweeper/hiscore.txt");
 		/*check if hiscore file exists*/
-		
-		File scoreFile = new File("src/minesweeper/hiscore.txt");
+	}
+	
+	public boolean scoreIsNumber(String s){
+		return s.matches("\\d*");
+	}
+	
+	/**
+	 * setHiscore
+	 * set the score variable of the MinesweeperHiscore object
+	 * read from hiscore.txt and find the fastest time recorded
+	 */
+	public void setHiscore(){
 		try {
 			if(!scoreFile.createNewFile()){
 				
@@ -30,6 +44,7 @@ public class MinesweeperHiscore {
 				hiscoreReader.close();
 			}
 			else{
+				//file did not exist. no high score existed. set score to 0.
 				score = "0";
 			}
 		}
@@ -39,8 +54,16 @@ public class MinesweeperHiscore {
 		}
 	}
 	
-	public boolean scoreIsNumber(String s){
-		return s.matches("\\d*");
+	public void saveHiscore(String score){
+		try {
+			BufferedWriter hiscoreWriter = new BufferedWriter(new FileWriter(scoreFile, true));
+			hiscoreWriter.newLine();
+			hiscoreWriter.write(score);
+			hiscoreWriter.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public String getScore(){

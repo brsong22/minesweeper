@@ -33,6 +33,7 @@ public class MinesweeperStatsBar {
 		this.hiscoreLabel.setBackground(Color.WHITE);
 		
 		hiScore = new MinesweeperHiscore();
+		hiScore.setHiscore();
 		hiscoreLabel.setText(hiScore.getScore());
 			
 		switch(size){

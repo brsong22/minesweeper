@@ -58,6 +58,8 @@ public class Main {
 	public static void gameOver(int winLoss, String endTime){
 		StringBuffer endGameText = new StringBuffer("");
 		if(winLoss == 1){
+			MinesweeperHiscore gameScore = new MinesweeperHiscore();
+			gameScore.saveHiscore(endTime);
 			endGameText.append("You win! B)");
 		}
 		else{
