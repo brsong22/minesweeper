@@ -72,7 +72,7 @@ public class Board{
 		reset = new MinesweeperResetButtonMouseListener(gameTime, this);
 		statsBar.getStatsButton().addMouseActionListener(reset);
 		
-		minefield = new MinesweeperGrid(s.getName());
+		minefield = new MinesweeperGrid(s);
 		gridSpaces = minefield.getButtonsArray();
 		gridListener = new MinesweeperGridMouseListener(gridSpaces, numSpacesLeft, totalBombs, statsBar);
 		minefield.addMouseListener(gridListener);

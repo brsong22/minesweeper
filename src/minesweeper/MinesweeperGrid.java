@@ -18,23 +18,6 @@ public class MinesweeperGrid {
 	//JPanel to hold the GridSpaces for the game
 	private JPanel grid;
 
-	//small grid size
-	private final static int SMALL_ROW = 9;
-	private final static int SMALL_COL = 9;
-
-	//medium grid size
-	private final static int MED_ROW = 16;
-	private final static int MED_COL = 16;
-
-	//large grid size
-	private final static int LARGE_ROW = 16;
-	private final static int LARGE_COL = 30;
-
-	//number of bombs for each size
-	private final static int NUM_BOMBS_SMALL = 10;
-	private final static int NUM_BOMBS_MED = 40;
-	private final static int NUM_BOMBS_LARGE = 99;
-
 	private int numRows;
 	private static int numCols;
 	private static int numSpacesLeft;
@@ -42,47 +25,29 @@ public class MinesweeperGrid {
 	private int totalBombs;
 	private GridSpace gridButtons[][];
 
-	public MinesweeperGrid(String size){
+	public MinesweeperGrid(BoardSizeEnum size){
+		numRows = size.getRows();
+		numCols = size.getCols();
+		numSpacesLeft = numRows * numCols;
+		numBombsLeft = size.getBombs();
+		totalBombs = numBombsLeft;
+		grid = new JPanel();
+		grid.setLayout(new GridLayout(numRows, numCols));
 		switch(size){
-		case "small":
-			numRows = SMALL_ROW;
-			numCols = SMALL_COL;
-			numSpacesLeft = numRows * numCols;
-			numBombsLeft = NUM_BOMBS_SMALL;
-			totalBombs = numBombsLeft;
-			grid = new JPanel();
+		case SMALL:
 			grid.setBounds(0, 35, 384, 325);
-			grid.setLayout(new GridLayout(SMALL_ROW, SMALL_COL));
-			addGridSpaces();
 			break;
-		case "medium":
-			numRows = MED_ROW;
-			numCols = MED_COL;
-			numSpacesLeft = numRows * numCols;
-			numBombsLeft = NUM_BOMBS_MED;
-			totalBombs = numBombsLeft;
-			grid = new JPanel();
+		case MEDIUM:
 			grid.setBounds(0, 35, 690, 635);
-			grid.setLayout(new GridLayout(MED_ROW, MED_COL));
-			addGridSpaces();
 			break;
-		case "large":
-			numRows = LARGE_ROW;
-			numCols = LARGE_COL;
-			numSpacesLeft = numRows * numCols;
-			numBombsLeft = NUM_BOMBS_LARGE;
-			totalBombs = numBombsLeft;
-			grid = new JPanel();
+		case LARGE:
 			grid.setBounds(0, 35, 1300, 635);
-			grid.setLayout(new GridLayout(LARGE_ROW, LARGE_COL));
-			addGridSpaces();
 			break;
 		default:
-			numSpacesLeft = numRows * numCols;
-			numBombsLeft = totalBombs;
-			grid.setLayout(new GridLayout(numRows, numCols));
+			grid.setBounds(0, 35, 384, 325);
 			break;
 		}
+		addGridSpaces();
 	}
 
 	private void addGridSpaces(){
