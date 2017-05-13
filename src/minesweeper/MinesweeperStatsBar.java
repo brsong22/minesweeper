@@ -11,9 +11,11 @@ public class MinesweeperStatsBar {
 	private MinesweeperStatusButton gameStatusButton;
 	private JLabel bombsLabel;
 	private JLabel timeLabel;
+	private JLabel hiscoreLabel;
+	private MinesweeperHiscore hiScore;
 	private int numberOfBombs;
 	
-	public MinesweeperStatsBar(BoardSizeEnum size, JLabel bLabel, JLabel tLabel){
+	public MinesweeperStatsBar(BoardSizeEnum size, JLabel bLabel, JLabel tLabel, JLabel sLabel){
 		stats = new JPanel();
 		stats.setLayout(null);
 		gameStatusButton = new MinesweeperStatusButton();
@@ -26,7 +28,14 @@ public class MinesweeperStatsBar {
 		this.timeLabel.setOpaque(true);
 		this.timeLabel.setBackground(Color.WHITE);
 		this.timeLabel.setText("0");
+		this.hiscoreLabel = sLabel;
+		this.hiscoreLabel.setOpaque(true);
+		this.hiscoreLabel.setBackground(Color.WHITE);
 		
+		hiScore = new MinesweeperHiscore(size);
+		hiScore.readHiscore();
+		hiscoreLabel.setText(hiScore.getScore());
+			
 		switch(size){
 			case SMALL:
 				bombsLabel.setText("" + size.getBombs());
@@ -34,11 +43,12 @@ public class MinesweeperStatsBar {
 				stats.setBounds(0, 0, 384, 35);
 				gameStatusButton.getStatusButton().setBounds(171, 0, 35, 35);
 				bombsLabel.setBounds(48, 0, 66, 26);
-				timeLabel.setBounds(277, 0, 66, 26);
+				timeLabel.setBounds(225, 0, 66, 26);
+				hiscoreLabel.setBounds(300, 0, 66, 26);
 				stats.add(bombsLabel);
 				stats.add(gameStatusButton.getStatusButton());
 				stats.add(timeLabel);
-				
+				stats.add(hiscoreLabel);
 				break;
 			case MEDIUM:
 				bombsLabel.setText("" + size.getBombs());
@@ -46,21 +56,25 @@ public class MinesweeperStatsBar {
 				stats.setBounds(0, 0, 690, 35);
 				gameStatusButton.getStatusButton().setBounds(328, 0, 35, 35);
 				bombsLabel.setBounds(84, 0, 66, 26);
-				timeLabel.setBounds(510, 0, 66, 26);
+				timeLabel.setBounds(450, 0, 66, 26);
+				hiscoreLabel.setBounds(550, 0, 66, 26);
 				stats.add(gameStatusButton.getStatusButton());
 				stats.add(bombsLabel);
 				stats.add(timeLabel);
+				stats.add(hiscoreLabel);
 				break;
 			case LARGE:
 				bombsLabel.setText("" + size.getBombs());
 				numberOfBombs = size.getBombs();
+				stats.setBounds(0, 0, 1300, 35);
 				gameStatusButton.getStatusButton().setBounds(633, 0, 35, 35);
 				bombsLabel.setBounds(150, 0, 66, 26);
-				timeLabel.setBounds(987, 0, 66, 26);
+				timeLabel.setBounds(830, 0, 66, 26);
+				hiscoreLabel.setBounds(1000, 0, 66, 26);
 				stats.add(gameStatusButton.getStatusButton());
 				stats.add(bombsLabel);
 				stats.add(timeLabel);
-				stats.setBounds(0, 0, 1300, 35);
+				stats.add(hiscoreLabel);
 				break;
 			default:
 				bombsLabel.setText("" + numberOfBombs);
@@ -85,5 +99,9 @@ public class MinesweeperStatsBar {
 	
 	public JLabel getTimeLabel(){
 		return timeLabel;
+	}
+	
+	public JLabel getHiscoreLabel(){
+		return hiscoreLabel;
 	}
 }
