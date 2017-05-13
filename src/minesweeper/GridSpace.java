@@ -10,7 +10,7 @@ import javax.swing.JButton;
  */
 public class GridSpace {
 	private JButton gridButton;
-	private boolean hasBomb;
+	private boolean hasBomb = false;
 	private int id;
 	private boolean revealed = false;
 	private boolean isFlagged = false;
@@ -21,9 +21,8 @@ public class GridSpace {
 	 * @param hasBomb - denotes if space will have a bomb or not
 	 * @param id - id to reference gridspace
 	 */
-	GridSpace(boolean hasBomb, int id){
+	GridSpace(int id){
 		this.gridButton = new JButton();
-		this.hasBomb = hasBomb;
 		this.id = id;
 	}
 	
@@ -59,12 +58,11 @@ public class GridSpace {
 	
 	/**
 	 * setBomb
-	 * sets the bomb status of the gridspace
+	 * set a bomb on the gridspace
 	 * 
-	 * @param b - boolean denoting if the gridspace has a bomb or not
 	 */
-	public void setBomb(boolean b){
-		this.hasBomb = b;
+	public void setBomb(){
+		this.hasBomb = true;
 	}
 	
 	/**

@@ -20,7 +20,6 @@ public class MinesweeperGrid {
 
 	private int numRows;
 	private static int numCols;
-	private static int numSpacesLeft;
 	private int numBombsLeft;
 	private int totalBombs;
 	private GridSpace gridButtons[][];
@@ -28,9 +27,9 @@ public class MinesweeperGrid {
 	public MinesweeperGrid(BoardSizeEnum size){
 		numRows = size.getRows();
 		numCols = size.getCols();
-		numSpacesLeft = numRows * numCols;
 		numBombsLeft = size.getBombs();
 		totalBombs = numBombsLeft;
+		gridButtons = new GridSpace[numRows][numCols];
 		grid = new JPanel();
 		grid.setLayout(new GridLayout(numRows, numCols));
 		switch(size){
@@ -51,34 +50,28 @@ public class MinesweeperGrid {
 	}
 
 	private void addGridSpaces(){
-		int remainingSpaces = numSpacesLeft;
-		int bombs = totalBombs;
-		final GridSpace buttons[][] = new GridSpace[numRows][numCols];
 		for(int i = 0; i < numRows; i++){
 			for(int j = 0; j < numCols; j++){
-				Random rand = new Random();
-				boolean bombHere = false;
-				if(bombs > 0){
-					if(remainingSpaces == bombs){
-						bombHere = true;
-					}
-					else{
-						bombHere = rand.nextFloat() < (float)totalBombs/(float)(numRows*numCols);
-					}
-					if(bombHere){
-
-						--bombs;
-					}
-				}
-				buttons[i][j] = new GridSpace(bombHere, ((numCols*i)+j));
-				buttons[i][j].getJButton().setName(""+((numCols*i)+j));
-				grid.add(buttons[i][j].getJButton());
-				--remainingSpaces;
+				gridButtons[i][j] = new GridSpace(((numCols*i)+j));
+				gridButtons[i][j].getJButton().setName(""+((numCols*i)+j));
+				grid.add(gridButtons[i][j].getJButton());
 			}
 		}
-		gridButtons = buttons.clone();
+		setMines(gridButtons);
 	}
 
+	public void setMines(GridSpace spaces[][]){
+		int bombs = totalBombs;
+		Random rand = new Random();
+		while(bombs > 0){			
+			int gridX = rand.nextInt(numRows);
+			int gridY = rand.nextInt(numCols);
+			if(!spaces[gridX][gridY].containsBomb()){
+				spaces[gridX][gridY].setBomb();
+				bombs--;
+			}
+		}
+	}
 	public void addMouseListener(MinesweeperGridMouseListener minesweeperMouseListener){
 		for(int i = 0; i < numRows; i++){
 			for(int j = 0; j < numCols; j++){
