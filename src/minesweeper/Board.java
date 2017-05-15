@@ -25,7 +25,7 @@ public class Board{
 	private JLabel hiscoreLabel;
 	private MinesweeperResetButtonMouseListener reset;
 	private static MinesweeperGrid minefield;
-	private GridSpace[][] gridSpaces;
+	private GridSpace gridSpaces[][];
 	private MinesweeperGridMouseListener gridListener;
 	
 	/*Board Properties*/
@@ -135,6 +135,16 @@ public class Board{
 	public JFrame getFrame(){
 		return frame;
 	}
+	
+	/**
+	 * getMinefield
+	 * return the minefield of the board
+	 * 
+	 * @return - minefield
+	 */
+	public static MinesweeperGrid getMinefield(){
+		return minefield;
+	}
 
 	/**
 	 * resetBoard
@@ -145,6 +155,7 @@ public class Board{
 	 */
 	public void resetBoard(BoardSizeEnum size){
 		frame.dispose();
+		Main.changeIsFirstMoveStatus();
 		new Board(size);
 	}
 	

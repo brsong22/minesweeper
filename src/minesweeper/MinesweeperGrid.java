@@ -67,7 +67,7 @@ public class MinesweeperGrid {
 			int gridX = rand.nextInt(numRows);
 			int gridY = rand.nextInt(numCols);
 			if(!spaces[gridX][gridY].containsBomb()){
-				spaces[gridX][gridY].setBomb();
+				spaces[gridX][gridY].setBomb(true);
 				bombs--;
 			}
 		}

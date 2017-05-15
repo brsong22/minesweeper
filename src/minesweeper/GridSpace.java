@@ -59,10 +59,11 @@ public class GridSpace {
 	/**
 	 * setBomb
 	 * set a bomb on the gridspace
+	 * @param b 
 	 * 
 	 */
-	public void setBomb(){
-		this.hasBomb = true;
+	public void setBomb(boolean b){
+		this.hasBomb = b;
 	}
 	
 	/**

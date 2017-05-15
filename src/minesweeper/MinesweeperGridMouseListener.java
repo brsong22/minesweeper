@@ -68,18 +68,32 @@ public class MinesweeperGridMouseListener implements MouseListener{
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		if(Main.getIsFirstMoveStatus()){
-			gameTime.start();
-			Main.changeIsFirstMoveStatus();
-		}
 		int pressedID = Integer.parseInt(((JButton)e.getSource()).getName());
 		int buttonRow = MinesweeperGrid.getRow(pressedID);
 		int buttonCol = MinesweeperGrid.getCol(pressedID);
 		GridSpace played = buttons[buttonRow][buttonCol];
+		if(Main.getIsFirstMoveStatus()){
+			//first move should always be valid
+			//if first move contains bomb, relocate the bomb.
+			if(played.containsBomb()){
+				played.setBomb(false);
+				outerloop: //loop label to allow for breaking out of nested loop easily.
+				for(GridSpace[] g : Board.getMinefield().getButtonsArray()){
+					for(GridSpace gs : g){
+						if(!gs.containsBomb()){
+							gs.setBomb(true);
+							break outerloop; //we've successfully relocated the bomb into an empty space. continue play.
+						}
+					}
+				}
+			}
+			gameTime.start();
+			Main.changeIsFirstMoveStatus();
+		}
 		if(pressedButton == played.getJButton() && !played.isRevealed()){	
 			if(e.getButton() == MouseEvent.BUTTON1){
 				if(!played.getFlagStatus()){
-					if(played.containsBomb()){
+					if(played.containsBomb() && !Main.getIsFirstMoveStatus()){
 						gameTime.stop();
 						statusButton.changeStatusIcon(3);
 						played.getJButton().setEnabled(false);
