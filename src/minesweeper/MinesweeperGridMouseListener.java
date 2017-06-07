@@ -104,8 +104,8 @@ public class MinesweeperGridMouseListener implements MouseListener{
 					played.getJButton().setIcon(flagIcon);
 					played.getJButton().setDisabledIcon(flagIcon);
 					played.getJButton().setEnabled(false);
-					--numSpacesLeft;
-					--numBombsLeft;
+					numSpacesLeft--;
+					numBombsLeft--;
 					bombsLabel.setText("" + numBombsLeft);
 					if(numSpacesLeft == 0 && numBombsLeft == 0){
 						gameTime.stop();
@@ -118,8 +118,8 @@ public class MinesweeperGridMouseListener implements MouseListener{
 					played.getJButton().setIcon(null);
 					played.getJButton().setDisabledIcon(null);
 					played.getJButton().setEnabled(true);
-					++numSpacesLeft;
-					++numBombsLeft;
+					numSpacesLeft++;
+					numBombsLeft++;
 					bombsLabel.setText("" + numBombsLeft);
 				}
 			}

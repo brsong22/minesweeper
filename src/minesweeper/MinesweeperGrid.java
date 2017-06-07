@@ -2,8 +2,10 @@ package minesweeper;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.MouseListener;
 import java.util.Random;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 /**
@@ -83,6 +85,19 @@ public class MinesweeperGrid {
 		for(int i = 0; i < numRows; i++){
 			for(int j = 0; j < numCols; j++){
 				gridButtons[i][j].getJButton().addMouseListener(minesweeperMouseListener);
+			}
+		}
+	}
+	
+	public void addBotListener(MinesweeperBotActionListener botAction){
+		for(int i = 0; i < numRows; i++){
+			for(int j = 0; j < numCols; j++){
+				JButton btn = gridButtons[i][j].getJButton();
+				btn.addActionListener(botAction);
+				MouseListener[] mlisteners = btn.getMouseListeners();
+				for(MouseListener ml : mlisteners){
+					btn.removeMouseListener(ml);
+				}
 			}
 		}
 	}

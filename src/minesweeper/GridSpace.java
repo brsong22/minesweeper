@@ -8,7 +8,7 @@ import javax.swing.JButton;
  * Class: GridSpace
  * *This class handles creating the individual gridspaces to put on the game board
  */
-public class GridSpace {
+public class GridSpace{
 	private JButton gridButton;
 	private boolean hasBomb;
 	private int id;

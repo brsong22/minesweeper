@@ -27,6 +27,8 @@ public class Board{
 	private static MinesweeperGrid minefield;
 	private GridSpace[][] gridSpaces;
 	private MinesweeperGridMouseListener gridListener;
+	//private MinesweeperBotActionListener botAction;
+	//private MinesweeperBot gameBot;
 	
 	/*Board Properties*/
 	private BoardSizeEnum boardSize = BoardSizeEnum.SMALL; //default board size
@@ -62,11 +64,15 @@ public class Board{
 		numSpacesLeft = totalSpaces;
 		totalBombs = boardSize.getBombs();
 		
+		MinesweeperBot gameBot = new MinesweeperBot();
+		
 		MinesweeperTimerActionListener timerActionListener = new MinesweeperTimerActionListener(timeLabel);
 		gameTime = new MinesweeperTimer(1000, timerActionListener, timeLabel);
 		menuBar = new MinesweeperMenuBar(s.getName());
 		MinesweeperMenuBarActionListener sizeSelected = new MinesweeperMenuBarActionListener(this, gameTime);
-		MinesweeperMenuBar.addActionListener(sizeSelected);
+		MinesweeperMenuBar.addSizeMenuActionListener(sizeSelected);
+		MinesweeperBotMenuActionListener botMenuAction = new MinesweeperBotMenuActionListener(gameBot);
+		MinesweeperMenuBar.addBotMenuActionListener(botMenuAction);
 		
 		statsBar = new MinesweeperStatsBar(s, bombsLabel, timeLabel, hiscoreLabel);
 		reset = new MinesweeperResetButtonMouseListener(gameTime, this);
@@ -77,7 +83,6 @@ public class Board{
 		gridListener = new MinesweeperGridMouseListener(gridSpaces, numSpacesLeft, totalBombs, statsBar);
 		minefield.addMouseListener(gridListener);
 		gridListener.addGameTimerListener(gameTime);
-		
 		
 		frame = new JFrame();
 		frame.setVisible(true);
@@ -160,6 +165,9 @@ public class Board{
 		Main.gameOver(endStatus, endTime);
 	}
 	
+	public static String getGameTime(){
+		return timeCopy.getText();
+	}
 	/**
 	 * getGridSpace
 	 * gets the grid space of the GUI
